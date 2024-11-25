@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Chinnuuuuu!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #first-page, #second-page, #third-page {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            height: 100vh;
+        }
+
+        #first-page.active, #second-page.active, #third-page.active {
+            display: flex;
+        }
+
+        #first-page {
+            background: url('mok1.jpg') no-repeat center center/cover;
+        }
+
+        #second-page {
+            background: url('back1.jpg') no-repeat center center/cover;
+        }
+
+        #third-page {
+            position: relative;
+            overflow: hidden;
+            background: #f0f8ff; /* Fallback background color */
+        }
+
+        video#background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            background: #f0f8ff; /* Fallback background in case the video doesn't load */
+        }
+
+        .greeting {
+            font-size: 3em;
+            color: white;
+            text-shadow: 2px 2px 5px #000;
+            font-family: 'Great Vibes', cursive;
+            animation: fadeIn 3s ease-in-out infinite alternate;
+        }
+
+        .heart {
+            color: red;
+            font-size: 1.5em;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-transition {
+            width: 200px;
+            height: auto;
+            transition: all 3s ease-in-out;
+        }
+
+        .image-transition:hover {
+            width: 500px;
+            transform: rotate(360deg);
+        }
+
+        #next-page-link, #next-page-link-second {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        #next-page-link:hover, #next-page-link-second:hover {
+            background-color: #0056b3;
+            transform: scale(1.2);
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            animation: fadeInOut 8s ease-in-out infinite;
+        }
+
+        .image-container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        #play-music-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        #play-music-btn:hover {
+            background-color: #ff4081;
+        }
+
+        .year {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInOut 8s ease-in-out infinite;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 200px;
+            height: 160px;
+            cursor: pointer;
+            margin-top: 50px;
+            z-index: 1;
+        }
+
+        .envelope {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background: #f1c27d;
+            clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+            z-index: 2;
+        }
+
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f1c27d;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 80%;
+            background: #fff;
+            border-radius: 10px;
+            z-index: 1;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        .heart-icon {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff69b4;
+            font-size: 3em;
+        }
+
+        .letter-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: auto;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2em;
+            color: #333;
+            display: none;
+        }
+
+        .letter.show {
+            transform: translateX(-50%) translateY(-120%);
+            opacity: 1;
+        }
+
+        .letter-content.show {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Audio element for background music -->
+    <audio id="birthday-music" src="amaran_sai_pallavi.mp3" loop></audio>
+
+    <!-- First Page -->
+    <div id="first-page" class="active">
+        <div class="greeting">
+            Hey Chinnnnuuuu <span class="heart">&#10084;</span> !!
+        </div>
+        <button id="play-music-btn">Play Music</button>
+        <a href="#" id="next-page-link">Go to Next Page</a>
+    </div>
+
+    <!-- Second Page -->
+    <div id="second-page">
+        <div class="image-container">
+            <div style="text-align: center;">
+                <p class="year">2004 &#128118;</p>
+                <img src="old.jpg" alt="Small Child Pic" class="image-transition">
+            </div>
+            <div style="font-size: 3em; color: #ff69b4;">&#128152;&#10230;&#128152;</div>
+            <div style="text-align: center;">
+                <p class="year">2024 &#128105;</p>
+                <img src="new.jpg" alt="Grown Adult Pic" class="image-transition">
+            </div>
+        </div>
+        <p class="quote">You don’t get older, you get better.</p>
+        <a href="#" id="next-page-link-second">Go to Next Page</a>
+    </div>
+
+    <!-- Third Page -->
+    <div id="third-page">
+        <video id="background-video" autoplay loop muted>
+            <source src="background.mp4" type="video/mp4">
+        </video>        
+        <div class="envelope-container" id="envelope">
+            <div class="envelope"></div>
+            <div class="letter" id="letter">
+                <div class="heart-icon">&#128151;</div>
+                <div class="letter-content" id="letter-content">
+                    <p>Dear Chinnuuuuu,</p>
+                    <p>May your days be filled with happiness, and may all your dreams come true. Have a wonderful birthday!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio context initialization for compatibility with autoplay policies
+        let audioContext;
+        let audioElement = document.getElementById('birthday-music');
+
+        document.getElementById('play-music-btn').addEventListener('click', function() {
+            // Create an audio context to overcome autoplay restrictions
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const track = audioContext.createMediaElementSource(audioElement);
+                track.connect(audioContext.destination);
+            }
+            
+            // Resume the audio context and play the audio
+            audioContext.resume().then(() => {
+                audioElement.play().catch((error) => {
+                    console.log("Autoplay was prevented. User interaction is required to start audio.");
+                });
+            });
+        });
+
+        // Handle page transitions
+        document.getElementById('next-page-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('first-page').classList.remove('active');
+            document.getElementById('second-page').classList.add('active');
+        });
+
+        document.getElementById('next-page-link-second').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('second-page').classList.remove('active');
+            document.getElementById('third-page').classList.add('active');
+        });
+
+        // Handle envelope click to reveal the letter and show content
+        document.getElementById('envelope').addEventListener('click', function() {
+            const letter = document.getElementById('letter');
+            const letterContent = document.getElementById('letter-content');
+            letter.classList.toggle('show');
+            letterContent.classList.toggle('show');
+        });
+    </script>
+</body>
+</html>
